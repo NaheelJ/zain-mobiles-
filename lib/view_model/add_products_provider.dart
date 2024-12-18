@@ -11,7 +11,22 @@ class AddProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-// Product Listing State management
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//// Product Suitable Products Listing
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  List suitableProducts = [];
+
+  void assignSuitableProductsList({required List listData, required String categoryName, required String productName}) {
+    var category = listData.firstWhere((item) => item['Category'] == categoryName, orElse: () => null);
+    var product = category['products']?.firstWhere((prod) => prod['productName'] == productName, orElse: () => null);
+    suitableProducts = product["suitableFor"] ?? [];
+  }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//// Product Listing State management
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,7 +46,14 @@ class AddProductsProvider extends ChangeNotifier {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  void assignselectedTypeList({required List types,required List listData, required String categoryName}) {
+  void assignSelectedTypeList({required List types, required List listData, required String categoryName}) {
+    final productList = listData.firstWhere((item) => item["Category"] == categoryName, orElse: () => null)["products"] ?? [];
+    List typeListdata = [];
+    typeListdata = productList.where((item) => item["productType"] == types[selectedTypeIndex]).cast<Map<String, dynamic>>().toList();
+    selectedTypeList = typeListdata;
+  }
+
+  void setSelectedTypeList({required List types, required List listData, required String categoryName}) {
     final productList = listData.firstWhere((item) => item["Category"] == categoryName, orElse: () => null)["products"] ?? [];
     List typeListdata = [];
     typeListdata = productList.where((item) => item["productType"] == types[selectedTypeIndex]).cast<Map<String, dynamic>>().toList();
@@ -39,8 +61,7 @@ class AddProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Searching State management
+///// Searching State management
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +69,9 @@ class AddProductsProvider extends ChangeNotifier {
   List<dynamic> categoryFoundproducts = [];
   List<dynamic> productFoundProducts = [];
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+////// Product Searching Functions
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
   void assignCategoryFoundProductList({required List listData}) {
@@ -75,8 +99,18 @@ class AddProductsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+  /// Product Searching Functions
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
   void assignProductFoundProductList(currentproductList) {
     productFoundProducts = currentproductList;
+  }
+
+  void setProductFoundProductList(currentproductList) {
+    productFoundProducts = currentproductList;
+    notifyListeners();
   }
 
   void runFilterProduct({required String enteringKey, required String categoryName, required List listData}) {
@@ -84,10 +118,10 @@ class AddProductsProvider extends ChangeNotifier {
 
     // Check if the entered keyword is empty
     if (enteringKey.isEmpty) {
-      print(enteringKey);
+      // print(enteringKey);
       // If the search field is empty or only contains white-space, display all products
       result = selectedTypeList.toList();
-      print(result);
+      // print(result);
     } else {
       var category = listData.firstWhere((item) => item["Category"] == categoryName)["products"];
       // Filter products by the 'name' field (case-insensitive)

@@ -6,27 +6,41 @@ import 'package:zain_mobiles/screens/adding/product_adding_screen.dart';
 import 'package:zain_mobiles/view_model/add_products_provider.dart';
 import 'package:zain_mobiles/view_model/data_base_management.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
+class ProductDetailsScreen extends StatefulWidget {
   final String productName;
-  List suitableForList;
   final String productType;
   final String categoryName;
-  ProductDetailsScreen({
+  const ProductDetailsScreen({
     super.key,
     required this.productName,
-    required this.suitableForList,
     required this.productType,
     required this.categoryName,
   });
+
+  @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  Future<void> _handleRefresh() async {
+    final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
+    dataBase.fetchFromServer();
+  }
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
+    final provider = Provider.of<AddProductsProvider>(context, listen: false);
+    provider.assignSuitableProductsList(
+      listData: dataBase.listData,
+      categoryName: widget.categoryName,
+      productName: widget.productName,
+    );
     return Provider.of<DataBaseManagement>(context).isLoading
         ? LoadingScreen()
-        :  Scaffold(
+        : Scaffold(
             appBar: AppBar(
               elevation: 0,
               leading: IconButton(
@@ -37,7 +51,7 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
               centerTitle: true,
               title: Text(
-                productName,
+                widget.productName,
                 style: GoogleFonts.montserrat(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -53,8 +67,8 @@ class ProductDetailsScreen extends StatelessWidget {
                       deletingThing: "productName",
                       onDelete: () {
                         dataBase.removeProduct(
-                          productName: productName,
-                          categoryName: categoryName,
+                          productName: widget.productName,
+                          categoryName: widget.categoryName,
                         );
                         Navigator.pop(context);
                       },
@@ -71,97 +85,99 @@ class ProductDetailsScreen extends StatelessWidget {
               backgroundColor: Colors.white,
               surfaceTintColor: Colors.white,
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: height * 0.03),
-                    Container(
-                      width: width,
-                      padding: EdgeInsets.symmetric(vertical: height * 0.03, horizontal: width * 0.04),
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 252, 229, 255),
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: Color(0xFF5f3461),
+            body: RefreshIndicator(
+              displacement: 5,
+              backgroundColor: Colors.white,
+              color: Color(0xFF5f3461),
+              strokeWidth: 3,
+              triggerMode: RefreshIndicatorTriggerMode.anywhere,
+              onRefresh: _handleRefresh,
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: height * 0.03),
+                      Container(
+                        width: width,
+                        padding: EdgeInsets.symmetric(vertical: height * 0.03, horizontal: width * 0.04),
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 252, 229, 255),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: Color(0xFF5f3461),
+                          ),
                         ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Suitable Models',
-                              style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                                letterSpacing: 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Suitable Models',
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                  letterSpacing: 2,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: height * 0.01),
-                          Divider(color: Colors.white),
-                          SizedBox(height: height * 0.005),
-                          Consumer<AddProductsProvider>(
-                            builder: (context, provider, child) {
-                              var category = dataBase.listData.firstWhere((item) => item['Category'] == categoryName, orElse: () => null);
-                              var product = category['products']?.firstWhere(
-                                (prod) => prod['productName'] == productName,
-                                orElse: () => null,
-                              );
-                              suitableForList = product["suitableFor"] ?? [];
-                              return ListView.builder(
-                                itemCount: suitableForList.length, // Number of items in the list
-                                shrinkWrap: true, // Adjusts size based on content
-                                physics: NeverScrollableScrollPhysics(), // Prevents independent scrolling
-                                itemBuilder: (context, i) {
-                                  return Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: width * 0.01, vertical: height * 0.015),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: Color(0xFF5f3461),
+                            SizedBox(height: height * 0.01),
+                            Divider(color: Colors.white),
+                            SizedBox(height: height * 0.005),
+                            Consumer<AddProductsProvider>(
+                              builder: (context, person, child) {
+                                dataBase.fetch();
+                                return ListView.builder(
+                                  itemCount: person.suitableProducts.length,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: width * 0.01, vertical: height * 0.015),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: Color(0xFF5f3461)),
+                                              borderRadius: BorderRadius.circular(8),
                                             ),
-                                            borderRadius: BorderRadius.circular(8),
+                                            child: Text(
+                                              "${index + 1}",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: GoogleFonts.montserrat(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black,
+                                              ),
+                                            ),
                                           ),
-                                          child: Text(
-                                            "${i + 1}",
-                                            overflow: TextOverflow.ellipsis,
+                                          SizedBox(width: width * 0.04),
+                                          Text(
+                                            '${person.suitableProducts[index]}',
                                             style: GoogleFonts.montserrat(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: Colors.black,
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(width: MediaQuery.of(context).size.width * 0.04),
-                                        Text(
-                                          '${suitableForList[i]}',
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ],
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: height * 0.06),
-                  ],
+                      SizedBox(height: height * 0.06),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -185,8 +201,8 @@ class ProductDetailsScreen extends StatelessWidget {
                             context: context,
                             onAdd: () {
                               dataBase.addSuitableFor(
-                                categoryName: categoryName,
-                                productName: productName,
+                                categoryName: widget.categoryName,
+                                productName: widget.productName,
                                 newSuitableFor: dataBase.suitableForcontroller.text,
                               );
                             },

@@ -303,7 +303,7 @@ class DataBaseManagement extends ChangeNotifier {
       });
 
       clearAllProductControllers();
-      showToast(msg: "Products successfully added to the $selectedCategory Category", textColor: Colors.green);
+      showToast(msg: "Products added successfully", textColor: Colors.green);
     } catch (e) {
       print("Error adding new category: $e");
       showToast(msg: "Error adding new category: ${e.toString()}", textColor: Colors.redAccent);
@@ -366,7 +366,7 @@ class DataBaseManagement extends ChangeNotifier {
         'data': data,
       });
       fetchFromServer();
-      showToast(msg: "Product successfully removed from the $categoryName Category", textColor: Colors.green);
+      showToast(msg: "Product successfully removed", textColor: Colors.green);
     } catch (e) {
       print("Error removing product: $e");
       showToast(msg: "Error removing product: ${e.toString()}", textColor: Colors.redAccent);

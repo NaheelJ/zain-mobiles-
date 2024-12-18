@@ -7,12 +7,10 @@ import 'package:zain_mobiles/view_model/add_products_provider.dart';
 import 'package:zain_mobiles/view_model/data_base_management.dart';
 
 class ProductsListingScreen extends StatefulWidget {
-  List productList;
   final String categoryName;
   final List types;
   ProductsListingScreen({
     super.key,
-    required this.productList,
     required this.categoryName,
     required this.types,
   });
@@ -26,8 +24,8 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
     final provider = Provider.of<AddProductsProvider>(context, listen: false);
     final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
     dataBase.fetchFromServer();
-    provider.assignselectedTypeList(types: widget.types, listData: dataBase.listData, categoryName: widget.categoryName);
-    provider.assignProductFoundProductList(provider.selectedTypeList);
+    provider.setSelectedTypeList(types: widget.types, listData: dataBase.listData, categoryName: widget.categoryName);
+    provider.setProductFoundProductList(provider.selectedTypeList);
   }
 
   @override
@@ -44,7 +42,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
     final provider = Provider.of<AddProductsProvider>(context, listen: false);
     final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
     dataBase.fetch();
-    provider.assignselectedTypeList(types: widget.types, listData: dataBase.listData, categoryName: widget.categoryName);
+    provider.assignSelectedTypeList(types: widget.types, listData: dataBase.listData, categoryName: widget.categoryName);
     provider.assignProductFoundProductList(provider.selectedTypeList);
     return Provider.of<DataBaseManagement>(context).isLoading
         ? LoadingScreen()
@@ -132,7 +130,11 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                             FocusManager.instance.primaryFocus?.unfocus();
                           },
                           onChanged: (enteringKey) {
-                            provider.runFilterProduct(enteringKey: enteringKey, categoryName: widget.categoryName, listData: dataBase.listData);
+                            provider.runFilterProduct(
+                              enteringKey: enteringKey,
+                              categoryName: widget.categoryName,
+                              listData: dataBase.listData,
+                            );
                           },
                         ),
                       ),
@@ -142,57 +144,50 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                   Padding(
                     padding: EdgeInsets.only(left: width * 0.04),
                     child: Consumer<AddProductsProvider>(builder: (context, person, child) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: List.generate(
-                              widget.types.length,
-                              (index) {
-                                return Padding(
-                                  padding: EdgeInsets.only(right: index == widget.types.length - 1 ? width * 0.04 : 0.0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      person.setselectedTypeIndex(index);
-                                      provider.assignselectedTypeList(types: widget.types, listData: dataBase.listData, categoryName: widget.categoryName);
-                                      person.assignProductFoundProductList(provider.selectedTypeList);
-                                    },
-                                    child: Container(
-                                      height: height * 0.055,
-                                      width: widget.types.length == 1 ? width * 0.9 : width * 0.45,
-                                      decoration: BoxDecoration(
-                                        color: index == person.selectedTypeIndex ? Color(0xFF5f3461) : Colors.white,
-                                        borderRadius: widget.types.length == 1
-                                            ? BorderRadius.circular(10)
-                                            : index == 0
-                                                ? BorderRadius.horizontal(left: Radius.circular(10))
-                                                : index == widget.types.length - 1
-                                                    ? BorderRadius.horizontal(right: Radius.circular(10))
-                                                    : null,
-                                        border: Border.all(
-                                          color: Color(0xFF5f3461),
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          widget.types[index] as String,
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: index == person.selectedTypeIndex ? Colors.white : Colors.black,
-                                            letterSpacing: 1,
-                                          ),
+                      return SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: List.generate(
+                            widget.types.length,
+                            (index) {
+                              return Padding(
+                                padding: EdgeInsets.only(right: index == widget.types.length - 1 ? width * 0.04 : 0.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    person.setselectedTypeIndex(index);
+                                    provider.setSelectedTypeList(types: widget.types, listData: dataBase.listData, categoryName: widget.categoryName);
+                                    person.setProductFoundProductList(provider.selectedTypeList);
+                                  },
+                                  child: Container(
+                                    height: height * 0.055,
+                                    width: widget.types.length == 1 ? width * 0.9 : width * 0.45,
+                                    decoration: BoxDecoration(
+                                      color: index == person.selectedTypeIndex ? Color(0xFF5f3461) : Colors.white,
+                                      borderRadius: widget.types.length == 1
+                                          ? BorderRadius.circular(10)
+                                          : index == 0
+                                              ? BorderRadius.horizontal(left: Radius.circular(10))
+                                              : index == widget.types.length - 1
+                                                  ? BorderRadius.horizontal(right: Radius.circular(10))
+                                                  : null,
+                                      border: Border.all(color: Color(0xFF5f3461)),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        widget.types[index] as String,
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500,
+                                          color: index == person.selectedTypeIndex ? Colors.white : Colors.black,
+                                          letterSpacing: 1,
                                         ),
                                       ),
                                     ),
                                   ),
-                                );
-                              },
-                            ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       );
@@ -225,7 +220,6 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                           MaterialPageRoute(
                                             builder: (context) => ProductDetailsScreen(
                                               productName: person.productFoundProducts[index]["productName"],
-                                              suitableForList: person.productFoundProducts[index]['suitableFor'],
                                               categoryName: widget.categoryName,
                                               productType: person.productFoundProducts[index]["productType"],
                                             ),

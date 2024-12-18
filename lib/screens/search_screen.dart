@@ -93,7 +93,6 @@ class SearchScreen extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ProductsListingScreen(
-                                productList: person.categoryFoundproducts[index]["products"],
                                 categoryName: person.categoryFoundproducts[index]["Category"],
                                 types: person.categoryFoundproducts[index]["type"],
                               ),

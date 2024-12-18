@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "729649745422",
+    "project_id": "zainmobiles-6ea0e",
+    "storage_bucket": "zainmobiles-6ea0e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729649745422:android:13e0f13dad414fb7b6765f",
+        "android_client_info": {
+          "package_name": "com.example.zain_mobiles"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdTnTGRbiaAdtXsHm8ra7ehMQUgpDfdf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

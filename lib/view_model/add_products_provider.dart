@@ -29,15 +29,18 @@ class AddProductsProvider extends ChangeNotifier {
     selectedTypeIndex = index;
     notifyListeners();
   }
-  
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   void assignSelectedTypeList({required List types, required List listData, required String categoryName}) {
     final productList = listData.firstWhere((item) => item["Category"] == categoryName, orElse: () => null)["products"] ?? [];
-    List typeListdata = [];
-    typeListdata = productList.where((item) => item["productType"] == types[selectedTypeIndex]).cast<Map<String, dynamic>>().toList();
-    selectedTypeList = typeListdata;
+    final typesList = listData.firstWhere((item) => item["Category"] == categoryName, orElse: () => null)["type"] ?? [];
+    if (typesList.isNotEmpty) {
+      List typeListdata = productList.where((item) => item["productType"] == types[selectedTypeIndex]).cast<Map<String, dynamic>>().toList();
+      selectedTypeList = typeListdata;
+      return;
+    }
+    selectedTypeList = productList;
   }
 
   void setSelectedTypeList({required List types, required List listData, required String categoryName}) {
@@ -56,12 +59,11 @@ class AddProductsProvider extends ChangeNotifier {
 
   List suitableProducts = [];
 
-  void assignSuitableProductsList({required List listData ,required String categoryName, required String productName}) {
+  void assignSuitableProductsList({required List listData, required String categoryName, required String productName}) {
     var category = listData.firstWhere((item) => item['Category'] == categoryName, orElse: () => null);
     var product = category['products']?.firstWhere((prod) => prod['productName'] == productName, orElse: () => null);
     suitableProducts = product["suitableFor"] ?? [];
   }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///// Searching State management

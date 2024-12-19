@@ -198,7 +198,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                       );
                     }),
                   ),
-                  SizedBox(height: height * 0.012),
+                  SizedBox(height: height * 0.006),
                   Consumer<AddProductsProvider>(
                     builder: (context, person, child) {
                       return person.selectedTypeList.isNotEmpty
@@ -216,7 +216,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                   shrinkWrap: true,
                                   itemCount: person.productFoundProducts.length,
                                   physics: AlwaysScrollableScrollPhysics(),
-                                  padding: EdgeInsets.symmetric(vertical: height * 0.01, horizontal: width * 0.05),
+                                  padding: EdgeInsets.only(left: width * 0.05, right: width * 0.05,bottom: height * 0.06),
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
                                       onTap: () {

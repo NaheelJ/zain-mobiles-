@@ -153,9 +153,6 @@ class DataBaseManagement extends ChangeNotifier {
     if (categoryName.isEmpty) {
       showToast(msg: "Fill out the required fields", textColor: Colors.redAccent);
       return;
-    } else if (type.length == 1 && type[0] == "") {
-      showToast(msg: "Fill out the required fields", textColor: Colors.redAccent);
-      return;
     }
 
     var newCategory = {};

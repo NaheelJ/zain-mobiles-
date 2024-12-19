@@ -31,8 +31,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
     final provider = Provider.of<AddProductsProvider>(context, listen: false);
+    final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
+
+    dataBase.fetch(notifyListers: true);
     provider.assignSuitableProductsList(
       listData: dataBase.listData,
       categoryName: widget.categoryName,
@@ -64,7 +66,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   onPressed: () {
                     showDeleteConfirmationDialog(
                       context: context,
-                      deletingThing: "productName",
+                      deletingThing: "product",
                       onDelete: () {
                         dataBase.removeProduct(
                           productName: widget.productName,
@@ -73,6 +75,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         Navigator.pop(context);
                       },
                     );
+                    // showDeleteConfirmationDialog(
+                    //   context: context,
+                    //   deletingThing: "product",
+                    //   onDelete: () {
+                    //     dataBase.removeProduct(
+                    //       productName: widget.productName,
+                    //       categoryName: widget.categoryName,
+                    //     );
+                    //     Navigator.pop(context);
+                    //   },
+                    // );
                   },
                   icon: Icon(
                     Icons.delete_outline,
@@ -130,7 +143,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             SizedBox(height: height * 0.005),
                             Consumer<AddProductsProvider>(
                               builder: (context, person, child) {
-                                dataBase.fetch();
                                 return ListView.builder(
                                   itemCount: person.suitableProducts.length,
                                   shrinkWrap: true,
@@ -305,54 +317,96 @@ Future<void> showDeleteConfirmationDialog({
 }) async {
   showDialog(
     context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(
-          "Delete",
-          style: GoogleFonts.montserrat(
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-            color: Colors.redAccent.shade200,
+    barrierDismissible: false,
+    builder: (context) {
+      return Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Icon with circular background
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.red.shade100,
+                ),
+                padding: const EdgeInsets.all(16.0),
+                child: Icon(
+                  Icons.error_outline,
+                  color: Colors.red,
+                  size: 48.0,
+                ),
+              ),
+              const SizedBox(height: 16.0),
+
+              // Title
+              Text(
+                "Delete $deletingThing",
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 8.0),
+
+              // Subtitle
+              Text(
+                "Are you sure you want to delete this $deletingThing?\nThis action cannot be undone.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.grey.shade700,
+                ),
+              ),
+              const SizedBox(height: 24.0),
+
+              // Buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context); // Close dialog
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.grey.shade300,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 14.0),
+                      ),
+                      child: const Text("Cancel"),
+                    ),
+                  ),
+                  const SizedBox(width: 16.0),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        onDelete();
+                        Navigator.pop(context); // Close dialog
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.redAccent.shade400,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 14.0),
+                      ),
+                      child: const Text("Delete"),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
-        content: Text(
-          "Are you sure you want to delete this $deletingThing?",
-          style: GoogleFonts.montserrat(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: Colors.black,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the dialog
-            },
-            child: Text(
-              "Cancel",
-              style: GoogleFonts.montserrat(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the dialog
-              onDelete(); // Execute the delete action
-            },
-            child: Text(
-              "Delete",
-              style: GoogleFonts.montserrat(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.redAccent,
-              ),
-            ),
-          ),
-        ],
       );
     },
   );

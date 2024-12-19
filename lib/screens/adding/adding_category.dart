@@ -156,13 +156,13 @@ class _AddCategoryState extends State<AddCategory> {
                 bottomNavigationBar: BottomAppBar(
                   color: Colors.transparent,
                   surfaceTintColor: Colors.transparent,
-                  height: height * 0.12,
+                  height: height * 0.13,
                   child: Column(
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                         child: SizedBox(
-                          height: 57,
+                          height: height * 0.08,
                           child: Consumer<AddProductsProvider>(
                             builder: (context, person, child) => ElevatedButton(
                               style: ElevatedButton.styleFrom(

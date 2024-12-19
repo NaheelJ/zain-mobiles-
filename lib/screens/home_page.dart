@@ -22,8 +22,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    final provider = Provider.of<DataBaseManagement>(context, listen: false);
-    provider.fetchFromServer();
+
   }
 
   @override
@@ -31,6 +30,7 @@ class _HomePageState extends State<HomePage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
+    dataBase.fetch(notifyListers: true);
     return Provider.of<DataBaseManagement>(context).isLoading
         ? LoadingScreen()
         : SingleChildScrollView(
@@ -115,7 +115,6 @@ class _HomePageState extends State<HomePage> {
                         height: height,
                         child: Consumer<DataBaseManagement>(
                           builder: (context, person, child) {
-                            person.fetch();
                             return GridView.builder(
                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
@@ -200,4 +199,3 @@ class _HomePageState extends State<HomePage> {
           );
   }
 }
-

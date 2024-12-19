@@ -60,38 +60,41 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: Consumer<AddProductsProvider>(
-        builder: (context, person, child) => DotCurvedBottomNav(
-          selectedIndex: person.currentPage,
-          margin: EdgeInsets.all(0),
-          scrollController: ScrollController(),
-          hideOnScroll: true,
-          indicatorColor: Color(0xFF5f3461),
-          backgroundColor: Color(0xFF5f3461),
-          animationDuration: const Duration(milliseconds: 300),
-          animationCurve: Curves.easeOut,
-          indicatorSize: 5,
-          borderRadius: 0,
-          height: 70,
-          onTap: (index) {
-            person.setSelectedPageIndex(index);
-            person.pageController.animateToPage(
-              index,
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeOut,
-            );
-          },
-          items: [
-            Icon(
-              Icons.home,
-              color: person.currentPage == 0 ? Color(0xffE2BBBF) : Color(0xffE9EAF8),
-              size: 25,
-            ),
-            Icon(
-              Icons.add_box_rounded,
-              color: person.currentPage == 1 ? Color(0xffE2BBBF) : Color(0xffE9EAF8),
-              size: 25,
-            ),
-          ],
+        builder: (context, person, child) => ClipRRect(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+          child: DotCurvedBottomNav(
+            selectedIndex: person.currentPage,
+            margin: EdgeInsets.all(0),
+            scrollController: ScrollController(),
+            hideOnScroll: true,
+            indicatorColor: Color(0xFF5f3461),
+            backgroundColor: Color(0xFF5f3461),
+            animationDuration: const Duration(milliseconds: 300),
+            animationCurve: Curves.easeOut,
+            indicatorSize: 5,
+            borderRadius: 0,
+            height: 70,
+            onTap: (index) {
+              person.setSelectedPageIndex(index);
+              person.pageController.animateToPage(
+                index,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeOut,
+              );
+            },
+            items: [
+              Icon(
+                Icons.home,
+                color: person.currentPage == 0 ? Color(0xffE2BBBF) : Color(0xffE9EAF8),
+                size: 25,
+              ),
+              Icon(
+                Icons.add_box_outlined,
+                color: person.currentPage == 1 ? Color(0xffE2BBBF) : Color(0xffE9EAF8),
+                size: 25,
+              ),
+            ],
+          ),
         ),
       ),
     );

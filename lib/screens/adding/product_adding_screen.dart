@@ -105,7 +105,7 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
                           builder: (context, person, child) {
                             return DropdownButton<String>(
                               value: dataBase.selectedCategory,
-                              menuWidth: width,
+                              menuWidth: width* 0.88,
                               dropdownColor: Colors.white,
                               alignment: Alignment.centerRight,
                               iconSize: 24,
@@ -162,7 +162,7 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
                         child: Consumer<DataBaseManagement>(
                           builder: (context, person, child) => DropdownButton<String>(
                             value: dataBase.productSelectedType,
-                            menuWidth: width,
+                            menuWidth: width* 0.88,
                             dropdownColor: Colors.white,
                             alignment: Alignment.centerRight,
                             iconSize: 24,
@@ -274,13 +274,13 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
             bottomNavigationBar: BottomAppBar(
               color: Colors.transparent,
               surfaceTintColor: Colors.transparent,
-              height: height * 0.12,
+              height: height * 0.13,
               child: Column(
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                     child: SizedBox(
-                      height: 55,
+                      height: height * 0.08,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff5F3461),

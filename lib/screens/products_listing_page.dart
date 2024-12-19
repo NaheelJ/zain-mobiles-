@@ -9,7 +9,7 @@ import 'package:zain_mobiles/view_model/data_base_management.dart';
 class ProductsListingScreen extends StatefulWidget {
   final String categoryName;
   final List types;
-  ProductsListingScreen({
+  const ProductsListingScreen({
     super.key,
     required this.categoryName,
     required this.types,
@@ -32,7 +32,14 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
   void initState() {
     super.initState();
     final provider = Provider.of<AddProductsProvider>(context, listen: false);
+    final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
     provider.assignSelectedTypeIndex(0);
+    provider.assignSelectedTypeList(
+      types: widget.types,
+      listData: dataBase.listData,
+      categoryName: widget.categoryName,
+    );
+    provider.assignProductFoundProductList(provider.selectedTypeList);
   }
 
   @override
@@ -41,9 +48,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
     final width = MediaQuery.of(context).size.width;
     final provider = Provider.of<AddProductsProvider>(context, listen: false);
     final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
-    dataBase.fetch();
-    provider.assignSelectedTypeList(types: widget.types, listData: dataBase.listData, categoryName: widget.categoryName);
-    provider.assignProductFoundProductList(provider.selectedTypeList);
+    dataBase.fetch(notifyListers: false);
     return Provider.of<DataBaseManagement>(context).isLoading
         ? LoadingScreen()
         : Scaffold(

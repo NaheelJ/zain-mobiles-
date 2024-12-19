@@ -27,7 +27,7 @@ class SearchScreen extends StatelessWidget {
             icon: Icon(Icons.arrow_back, color: Colors.black)),
         centerTitle: true,
         title: Text(
-          "Search",
+          "Categories",
           style: GoogleFonts.montserrat(
             fontSize: 16,
             fontWeight: FontWeight.w500,

@@ -107,15 +107,15 @@ class DataBaseManagement extends ChangeNotifier {
       if (snapshot.exists && snapshot.data() != null) {
         listData = snapshot.get('data') ?? [];
       } else {
-        print("Document does not exist or contains no data.");
+        // print("Document does not exist or contains no data.");
       }
     } catch (e) {
-      print("Data Fetching Error: $e");
+      // print("Data Fetching Error: $e");
     }
     notifyListeners();
   }
 
-  Future<void> fetch() async {
+  Future<void> fetch({required bool notifyListers}) async {
     final documentRef = FirebaseFirestore.instance.collection(collectionId).doc(documentId);
     try {
       // Offline persistence will prioritize cache data
@@ -128,11 +128,16 @@ class DataBaseManagement extends ChangeNotifier {
 
       if (snapshot.exists && snapshot.data() != null) {
         listData = snapshot.get('data') ?? [];
+        // print(listData);
       } else {
-        print("Document does not exist or contains no data.");
+        // print("Document does not exist or contains no data.");
       }
     } catch (e) {
-      print("Data Fetching Error: $e");
+      // print("Data Fetching Error: $e");
+    }
+    if (notifyListers) {
+      notifyListeners();
+      // print(notifyListers);
     }
   }
 

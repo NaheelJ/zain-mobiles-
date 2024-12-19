@@ -11,7 +11,7 @@ class SplashScreen extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;  
     final provider = Provider.of<DataBaseManagement>(context, listen: false);
-    provider.fetchFromServer();  
+    provider.fetch(notifyListers: false);  
     Future.delayed(
       Duration(seconds: 3),
       () {

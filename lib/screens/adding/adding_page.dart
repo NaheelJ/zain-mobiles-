@@ -52,8 +52,8 @@ class AddingPage extends StatelessWidget {
                                 : null
                           ][index],
                           child: Container(
-                            height: height * 0.12,
-                            padding: EdgeInsets.all(10),
+                            // height: height * 0.12,
+                            padding: EdgeInsets.all(15),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: [Colors.white, dataBase.listData.isNotEmpty ? Colors.white : Color.fromARGB(42, 154, 153, 153)][index],
@@ -61,16 +61,27 @@ class AddingPage extends StatelessWidget {
                                 color: [Color(0xFF5f3461), dataBase.listData.isNotEmpty ? Color(0xFF5f3461) : const Color.fromARGB(58, 128, 128, 128)][index],
                               ),
                             ),
-                            child: Center(
-                              child: Text(
-                                ["Create Category", "Add New Product"][index],
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: [Color(0xFF5f3461), dataBase.listData.isNotEmpty ? Color(0xFF5f3461) : Colors.white][index],
-                                  letterSpacing: 1,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: height * 0.005),
+                                Icon(
+                                  [Icons.dashboard_customize_outlined, Icons.format_list_bulleted_add][index],
+                                  color: [Colors.blue, Colors.orangeAccent][index],
+                                  size: 30,
                                 ),
-                              ),
+                                SizedBox(height: height * 0.008),
+                                Text(
+                                  ["Create Category", "Add\n Product"][index],
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: [Color(0xFF5f3461), dataBase.listData.isNotEmpty ? Color(0xFF5f3461) : Colors.white][index],
+                                    letterSpacing: 1,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

@@ -280,7 +280,7 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                     child: SizedBox(
-                      height: height * 0.08,
+                      height: 60,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff5F3461),

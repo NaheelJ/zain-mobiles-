@@ -75,17 +75,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         Navigator.pop(context);
                       },
                     );
-                    // showDeleteConfirmationDialog(
-                    //   context: context,
-                    //   deletingThing: "product",
-                    //   onDelete: () {
-                    //     dataBase.removeProduct(
-                    //       productName: widget.productName,
-                    //       categoryName: widget.categoryName,
-                    //     );
-                    //     Navigator.pop(context);
-                    //   },
-                    // );
                   },
                   icon: Icon(
                     Icons.delete_outline,
@@ -202,7 +191,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                     child: SizedBox(
-                      height: 55,
+                      height: 60,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff5F3461),
@@ -371,7 +360,7 @@ Future<void> showDeleteConfirmationDialog({
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        Navigator.pop(context); // Close dialog
+                        Navigator.pop(context);
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.black,
@@ -393,7 +382,7 @@ Future<void> showDeleteConfirmationDialog({
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor: Colors.redAccent.shade400,
+                        backgroundColor: Colors.redAccent.shade200,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),

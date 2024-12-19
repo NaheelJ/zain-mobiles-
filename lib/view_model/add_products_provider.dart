@@ -33,14 +33,20 @@ class AddProductsProvider extends ChangeNotifier {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   void assignSelectedTypeList({required List types, required List listData, required String categoryName}) {
-    final productList = listData.firstWhere((item) => item["Category"] == categoryName, orElse: () => null)["products"] ?? [];
-    final typesList = listData.firstWhere((item) => item["Category"] == categoryName, orElse: () => null)["type"] ?? [];
-    if (typesList.isNotEmpty) {
+    final List productList = listData.firstWhere((item) => item["Category"] == categoryName, orElse: () => null)["products"] ?? [];
+    if (types.isNotEmpty) {
       List typeListdata = productList.where((item) => item["productType"] == types[selectedTypeIndex]).cast<Map<String, dynamic>>().toList();
-      selectedTypeList = typeListdata;
+      if (selectedTypeList.length != typeListdata.length) {
+        selectedTypeList = typeListdata;
+        assignProductFoundProductList(selectedTypeList);
+      }
       return;
     }
-    selectedTypeList = productList;
+    if (selectedTypeList.length != productList.length) {
+      selectedTypeList = productList;
+      assignProductFoundProductList(selectedTypeList);
+    }
+    return;
   }
 
   void setSelectedTypeList({required List types, required List listData, required String categoryName}) {

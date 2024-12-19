@@ -162,7 +162,7 @@ class _AddCategoryState extends State<AddCategory> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                         child: SizedBox(
-                          height: height * 0.08,
+                          height: 60,
                           child: Consumer<AddProductsProvider>(
                             builder: (context, person, child) => ElevatedButton(
                               style: ElevatedButton.styleFrom(

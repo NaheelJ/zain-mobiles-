@@ -7,12 +7,12 @@ import 'package:zain_mobiles/view_model/add_products_provider.dart';
 import 'package:zain_mobiles/view_model/data_base_management.dart';
 
 class ProductsListingScreen extends StatefulWidget {
-  final String categoryName;
-  final List types;
+  final String? categoryName;
+  final List? types;
   const ProductsListingScreen({
     super.key,
-    required this.categoryName,
-    required this.types,
+    this.categoryName,
+    this.types,
   });
 
   @override
@@ -24,7 +24,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
     final provider = Provider.of<AddProductsProvider>(context, listen: false);
     final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
     dataBase.fetchFromServer();
-    provider.setSelectedTypeList(types: widget.types, listData: dataBase.listData, categoryName: widget.categoryName);
+    provider.setSelectedTypeList(types: widget.types!, listData: dataBase.listData, categoryName: widget.categoryName!);
     provider.setProductFoundProductList(provider.selectedTypeList);
   }
 
@@ -33,13 +33,8 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
     super.initState();
     final provider = Provider.of<AddProductsProvider>(context, listen: false);
     final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
+    dataBase.fetch(notifyListers: false);
     provider.assignSelectedTypeIndex(0);
-    provider.assignSelectedTypeList(
-      types: widget.types,
-      listData: dataBase.listData,
-      categoryName: widget.categoryName,
-    );
-    provider.assignProductFoundProductList(provider.selectedTypeList);
   }
 
   @override
@@ -49,6 +44,11 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
     final provider = Provider.of<AddProductsProvider>(context, listen: false);
     final dataBase = Provider.of<DataBaseManagement>(context, listen: false);
     dataBase.fetch(notifyListers: false);
+    provider.assignSelectedTypeList(
+      types: widget.types!,
+      listData: dataBase.listData,
+      categoryName: widget.categoryName!,
+    );
     return Provider.of<DataBaseManagement>(context).isLoading
         ? LoadingScreen()
         : Scaffold(
@@ -66,9 +66,9 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                   onPressed: () {
                     showDeleteConfirmationDialog(
                       context: context,
-                      deletingThing: widget.categoryName,
+                      deletingThing: widget.categoryName!,
                       onDelete: () {
-                        dataBase.removeCategory(categoryName: widget.categoryName);
+                        dataBase.removeCategory(categoryName: widget.categoryName!);
                         Navigator.pop(context);
                       },
                     );
@@ -78,7 +78,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
               ],
               centerTitle: true,
               title: Text(
-                widget.categoryName,
+                widget.categoryName!,
                 style: GoogleFonts.montserrat(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -137,7 +137,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                           onChanged: (enteringKey) {
                             provider.runFilterProduct(
                               enteringKey: enteringKey,
-                              categoryName: widget.categoryName,
+                              categoryName: widget.categoryName!,
                               listData: dataBase.listData,
                             );
                           },
@@ -154,33 +154,37 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: List.generate(
-                            widget.types.length,
+                            widget.types!.length,
                             (index) {
                               return Padding(
-                                padding: EdgeInsets.only(right: index == widget.types.length - 1 ? width * 0.04 : 0.0),
+                                padding: EdgeInsets.only(right: index == widget.types!.length - 1 ? width * 0.04 : 0.0),
                                 child: InkWell(
                                   onTap: () {
                                     person.setselectedTypeIndex(index);
-                                    provider.setSelectedTypeList(types: widget.types, listData: dataBase.listData, categoryName: widget.categoryName);
+                                    provider.setSelectedTypeList(
+                                      types: widget.types!,
+                                      listData: dataBase.listData,
+                                      categoryName: widget.categoryName!,
+                                    );
                                     person.setProductFoundProductList(provider.selectedTypeList);
                                   },
                                   child: Container(
                                     height: height * 0.055,
-                                    width: widget.types.length == 1 ? width * 0.9 : width * 0.45,
+                                    width: widget.types!.length == 1 ? width * 0.9 : width * 0.45,
                                     decoration: BoxDecoration(
                                       color: index == person.selectedTypeIndex ? Color(0xFF5f3461) : Colors.white,
-                                      borderRadius: widget.types.length == 1
+                                      borderRadius: widget.types!.length == 1
                                           ? BorderRadius.circular(10)
                                           : index == 0
                                               ? BorderRadius.horizontal(left: Radius.circular(10))
-                                              : index == widget.types.length - 1
+                                              : index == widget.types!.length - 1
                                                   ? BorderRadius.horizontal(right: Radius.circular(10))
                                                   : null,
                                       border: Border.all(color: Color(0xFF5f3461)),
                                     ),
                                     child: Center(
                                       child: Text(
-                                        widget.types[index] as String,
+                                        widget.types![index] as String,
                                         style: GoogleFonts.montserrat(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w500,
@@ -198,7 +202,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                       );
                     }),
                   ),
-                  SizedBox(height: height * 0.006),
+                  SizedBox(height: height * 0.01),
                   Consumer<AddProductsProvider>(
                     builder: (context, person, child) {
                       return person.selectedTypeList.isNotEmpty
@@ -216,7 +220,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                   shrinkWrap: true,
                                   itemCount: person.productFoundProducts.length,
                                   physics: AlwaysScrollableScrollPhysics(),
-                                  padding: EdgeInsets.only(left: width * 0.05, right: width * 0.05,bottom: height * 0.06),
+                                  padding: EdgeInsets.only(left: width * 0.05, right: width * 0.05, bottom: height * 0.06),
                                   itemBuilder: (context, index) {
                                     return GestureDetector(
                                       onTap: () {
@@ -225,7 +229,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                           MaterialPageRoute(
                                             builder: (context) => ProductDetailsScreen(
                                               productName: person.productFoundProducts[index]["productName"],
-                                              categoryName: widget.categoryName,
+                                              categoryName: widget.categoryName!,
                                               productType: person.productFoundProducts[index]["productType"],
                                             ),
                                           ),

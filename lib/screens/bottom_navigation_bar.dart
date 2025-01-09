@@ -1,10 +1,11 @@
-import 'package:dot_curved_bottom_nav/dot_curved_bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:zain_mobiles/screens/adding/adding_page.dart';
 import 'package:zain_mobiles/screens/home_page.dart';
 import 'package:zain_mobiles/view_model/add_products_provider.dart';
+import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -60,40 +61,52 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: Consumer<AddProductsProvider>(
-        builder: (context, person, child) => ClipRRect(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-          child: DotCurvedBottomNav(
-            selectedIndex: person.currentPage,
-            margin: EdgeInsets.all(0),
-            scrollController: ScrollController(),
-            hideOnScroll: true,
-            indicatorColor: Color(0xFF5f3461),
-            backgroundColor: Color(0xFF5f3461),
-            animationDuration: const Duration(milliseconds: 300),
-            animationCurve: Curves.easeOut,
-            indicatorSize: 5,
-            borderRadius: 0,
-            height: 70,
-            onTap: (index) {
-              person.setSelectedPageIndex(index);
+        builder: (context, person, child) => SizedBox(
+          height: height * 0.09,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: width * 0.025),
+            child: CustomNavigationBar(
+              elevation: 15,
+              iconSize: 25.0,
+              borderRadius: Radius.circular(10),
+              strokeColor: Colors.white,
+              selectedColor: Color(0xFF5f3461),
+              unSelectedColor: Color(0xffacacac),
+              backgroundColor: Colors.white,
+              items: [
+                CustomNavigationBarItem(
+                  icon: Icon(Icons.home_outlined, color: person.currentPage == 0 ? Color(0xFF5f3461) : Color(0xffacacac),),
+                  title: Text(
+                    "Home",
+                    style: GoogleFonts.montserrat(
+                      color: person.currentPage == 0 ? Color(0xFF5f3461) : Color(0xffacacac),
+                      fontWeight: person.currentPage == 0 ? FontWeight.w600 : FontWeight.w400,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                CustomNavigationBarItem(
+                  icon: Icon(Icons.list_alt_outlined,color: person.currentPage == 1 ? Color(0xFF5f3461) : Color(0xffacacac)),
+                  title: Text(
+                    "Members",
+                    style: GoogleFonts.montserrat(
+                      color:  person.currentPage == 1 ? Color(0xFF5f3461) : Color(0xffacacac),
+                      fontWeight: person.currentPage == 1 ? FontWeight.w600 : FontWeight.w400,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
+              currentIndex: person.currentPage,
+              onTap: (index) {
+                person.setSelectedPageIndex(index);
               person.pageController.animateToPage(
                 index,
                 duration: Duration(milliseconds: 300),
                 curve: Curves.easeOut,
               );
-            },
-            items: [
-              Icon(
-                Icons.home,
-                color: person.currentPage == 0 ? Color(0xffE2BBBF) : Color(0xffE9EAF8),
-                size: 25,
-              ),
-              Icon(
-                Icons.add_box_outlined,
-                color: person.currentPage == 1 ? Color(0xffE2BBBF) : Color(0xffE9EAF8),
-                size: 25,
-              ),
-            ],
+              },
+            ),
           ),
         ),
       ),

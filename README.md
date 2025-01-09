@@ -6,8 +6,8 @@
 
 | Product Listing                      |
 | ------------------------------------ |
-| ![ProductListing](ProductList.jpg)  |
+| ![ProductListing](ProductList.jpg)   |
 
 | Product Adding                        |
 | ------------------------------------- |
-| ![Product Adding](ProductAdding.jpg) |
+| ![Product Adding](ProductAdding.jpg)  |

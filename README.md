@@ -1,13 +1,13 @@
 # zain_mobiles
 
-| Home Page                           |
-| ----------------------------------- |
-| ![HomePage](HomePage.jpg)           |
+| Home Page                            |
+| ------------------------------------ |
+| ![HomePage](HomePage.jpg)            |
 
 | Product Listing                      |
 | ------------------------------------ |
-| ![ProductListing](Product List.jpg)  |
+| ![ProductListing](ProductList.jpg)  |
 
 | Product Adding                        |
 | ------------------------------------- |
-| ![Product Adding](Product Adding.jpg) |
+| ![Product Adding](ProductAdding.jpg) |

@@ -3,4 +3,4 @@
 
 | Home Page                           |  Product Listing                      |  Product Adding                        |
 | ----------------------------------- |  ------------------------------------ | -------------------------------------- |
-| ![HomePage](HomePage.jpg)           |  ![ProductListing](Product List.jpg)  | ![ProductAdding](Product Adding.jpg)   |
+| ![HomePage](HomePage.jpg)           |  ![ProductListing](ProductList.jpg)  | ![ProductAdding](ProductAdding.jpg)   |

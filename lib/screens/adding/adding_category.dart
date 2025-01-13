@@ -32,20 +32,20 @@ class _AddCategoryState extends State<AddCategory> {
             builder: (context, person, child) {
               return Scaffold(
                 appBar: AppBar(
-                  backgroundColor: Colors.white,
-                  surfaceTintColor: Colors.white,
+                  backgroundColor: Color(0xFF5f3461),
+                  surfaceTintColor: Color(0xFF5f3461),
                   leading: IconButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: Icon(Icons.arrow_back, color: Colors.black)),
+                      icon: Icon(Icons.arrow_back, color: Colors.white)),
                   centerTitle: true,
                   title: Text(
                     "Create Category",
                     style: GoogleFonts.montserrat(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Colors.black,
+                      color: Colors.white,
                       letterSpacing: 1,
                     ),
                   ),
@@ -162,7 +162,7 @@ class _AddCategoryState extends State<AddCategory> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                         child: SizedBox(
-                          height: 60,
+                          height: 55,
                           child: Consumer<AddProductsProvider>(
                             builder: (context, person, child) => ElevatedButton(
                               style: ElevatedButton.styleFrom(

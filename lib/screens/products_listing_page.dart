@@ -59,19 +59,30 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.arrow_back),
+                icon: Icon(Icons.arrow_back, color: Colors.white),
+              ),
+              centerTitle: true,
+              title: Text(
+                widget.categoryName!,
+                style: GoogleFonts.montserrat(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  letterSpacing: 2,
+                ),
               ),
               actions: [
                 PopupMenuButton<String>(
                   surfaceTintColor: Colors.white,
                   color: Colors.white,
+                  iconColor: Colors.white,
                   itemBuilder: (BuildContext context) {
                     return [
                       PopupMenuItem(
                         onTap: () {
                           showDeleteConfirmationDialog(
                             context: context,
-                            deletingThing: widget.categoryName!,
+                            deletingThing: "Category",
                             onDelete: () {
                               dataBase.removeCategory(categoryName: widget.categoryName!);
                               Navigator.pop(context);
@@ -91,89 +102,92 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                   },
                 ),
               ],
-              centerTitle: true,
-              title: Text(
-                widget.categoryName!,
-                style: GoogleFonts.montserrat(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                  letterSpacing: 2,
-                ),
-              ),
               shadowColor: Colors.white,
-              backgroundColor: Colors.white,
-              surfaceTintColor: Colors.white,
+              backgroundColor: Color(0xFF5f3461),
+              surfaceTintColor: Color(0xFF5f3461),
             ),
             body: SingleChildScrollView(
               physics: NeverScrollableScrollPhysics(),
               child: Column(
                 children: [
-                  SizedBox(height: height * 0.012),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-                    child: Container(
-                      height: height * 0.06,
-                      width: width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Color(0xffF6FBFF),
+                  Container(
+                    padding: EdgeInsets.only(bottom: height * 0.0),
+                    decoration: BoxDecoration(
+                      color: Color(0xFF5f3461),
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(15),
                       ),
-                      child: Center(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'Search here..',
-                            labelStyle: GoogleFonts.montserrat(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xff5F3461),
-                              letterSpacing: 2,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: width * 0.04,
+                        vertical: height * 0.015,
+                      ),
+                      child: Container(
+                        height: height * 0.055,
+                        width: width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Color(0xffF6FBFF),
+                        ),
+                        child: Center(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Search here..',
+                              labelStyle: GoogleFonts.montserrat(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xff5F3461),
+                                letterSpacing: 2,
+                              ),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Colors.transparent),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Colors.transparent),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Colors.transparent),
+                              ),
+                              filled: true,
+                              fillColor: Color(0xffF6FBFF),
+                              prefixIcon: Icon(Icons.search, color: Color(0xff5F3461)),
+                              contentPadding: EdgeInsets.only(left: width * 0.09),
                             ),
-                            floatingLabelBehavior: FloatingLabelBehavior.never,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: Colors.transparent),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: Colors.transparent),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(color: Colors.transparent),
-                            ),
-                            filled: true,
-                            fillColor: Color(0xffF6FBFF),
-                            prefixIcon: Icon(Icons.search, color: Color(0xff5F3461)),
-                            contentPadding: EdgeInsets.only(left: width * 0.09),
+                            onTapOutside: (event) {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            },
+                            onChanged: (enteringKey) {
+                              provider.runFilterProduct(
+                                enteringKey: enteringKey,
+                                categoryName: widget.categoryName!,
+                                listData: dataBase.listData,
+                              );
+                            },
                           ),
-                          onTapOutside: (event) {
-                            FocusManager.instance.primaryFocus?.unfocus();
-                          },
-                          onChanged: (enteringKey) {
-                            provider.runFilterProduct(
-                              enteringKey: enteringKey,
-                              categoryName: widget.categoryName!,
-                              listData: dataBase.listData,
-                            );
-                          },
                         ),
                       ),
                     ),
                   ),
                   SizedBox(height: height * 0.02),
-                  Padding(
-                    padding: EdgeInsets.only(left: width * 0.04),
+                  Container(
+                    width: width,
+                    padding: EdgeInsets.only(left: width * 0.08),
                     child: Consumer<AddProductsProvider>(builder: (context, person, child) {
                       return SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
+                          mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: List.generate(
                             widget.types!.length,
                             (index) {
                               return Padding(
-                                padding: EdgeInsets.only(right: index == widget.types!.length - 1 ? width * 0.04 : 0.0),
+                                padding: EdgeInsets.only(right: widget.types!.length == 1 ? width * 0.0 : width * 0.2),
                                 child: InkWell(
                                   onTap: () {
                                     person.setselectedTypeIndex(index);
@@ -184,33 +198,28 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                     );
                                     person.setProductFoundProductList(provider.selectedTypeList);
                                   },
-                                  child: SizedBox(
-                                    height: height * 0.055,
-                                    width: widget.types!.length == 1 ? width * 0.9 : width * 0.45,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          widget.types![index] as String,
-                                          style: GoogleFonts.montserrat(
-                                            fontSize: 14,
-                                            fontWeight: index == person.selectedTypeIndex ? FontWeight.w600 : FontWeight.w400,
-                                            color: index != person.selectedTypeIndex ? Colors.black : Color.fromARGB(255, 134, 0, 144),
-                                            letterSpacing: 1,
-                                          ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        widget.types![index] as String,
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 14,
+                                          fontWeight: index == person.selectedTypeIndex ? FontWeight.w600 : FontWeight.w400,
+                                          color: index != person.selectedTypeIndex ? Colors.black : Colors.amber,
+                                          letterSpacing: 1,
                                         ),
-                                        SizedBox(height: 15),
-                                        Container(
-                                          height: 2,
-                                          width: width * 0.43,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(15),
-                                            color: index != person.selectedTypeIndex ? Colors.transparent : Color(0xFF5f3461),
-                                          ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Container(
+                                        height: 2,
+                                        width: width * 0.13,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15),
+                                          color: index != person.selectedTypeIndex ? Colors.transparent : Colors.amber,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               );
@@ -220,7 +229,9 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                       );
                     }),
                   ),
-                  SizedBox(height: height * 0.015),
+                  SizedBox(height: height * 0.003),
+                  Divider(color: Colors.grey.shade300),
+                  SizedBox(height: height * 0.025),
                   Consumer<AddProductsProvider>(
                     builder: (context, person, child) {
                       return person.selectedTypeList.isNotEmpty
@@ -315,7 +326,8 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                                       radius: 20,
                                                       backgroundColor: Color(0xffF6FBFF),
                                                       child: Consumer<AddProductsProvider>(
-                                                        builder: (context, person, child) => Icon(person.isDropDownOpen[index] || person.productFoundProducts.length == 1? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down_sharp),
+                                                        builder: (context, person, child) =>
+                                                            Icon(person.isDropDownOpen[index] || person.productFoundProducts.length == 1 ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down_sharp),
                                                       ),
                                                     ),
                                                   )
@@ -352,7 +364,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                                         width: width,
                                                         decoration: BoxDecoration(
                                                           border: Border(
-                                                            bottom: BorderSide(color: minIndex == person.productFoundProducts[index]['suitableFor'].length - 1? Colors.white:  Colors.grey.shade300),
+                                                            bottom: BorderSide(color: minIndex == person.productFoundProducts[index]['suitableFor'].length - 1 ? Colors.white : Colors.grey.shade300),
                                                           ),
                                                         ),
                                                         child: Center(
@@ -380,15 +392,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                 ),
                               ),
                             )
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(height: height * 0.35),
-                                SizedBox(
-                                  child: Text("Products Not Found"),
-                                ),
-                              ],
-                            );
+                          : SizedBox();
                     },
                   ),
                   SizedBox(height: height * 0.04),

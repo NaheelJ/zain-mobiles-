@@ -52,7 +52,6 @@ class AddingPage extends StatelessWidget {
                                 : null
                           ][index],
                           child: Container(
-                            // height: height * 0.12,
                             padding: EdgeInsets.all(15),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
@@ -70,14 +69,14 @@ class AddingPage extends StatelessWidget {
                                   color: [Colors.blue, Colors.orangeAccent][index],
                                   size: 30,
                                 ),
-                                SizedBox(height: height * 0.008),
+                                SizedBox(height: height * 0.013),
                                 Text(
                                   ["Create Category", "Add\n Product"][index],
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.montserrat(
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.w600,
-                                    color: [Color(0xFF5f3461), dataBase.listData.isNotEmpty ? Color(0xFF5f3461) : Colors.white][index],
+                                    color: [Colors.black, dataBase.listData.isNotEmpty ? Colors.black : Colors.white][index],
                                     letterSpacing: 1,
                                   ),
                                 ),

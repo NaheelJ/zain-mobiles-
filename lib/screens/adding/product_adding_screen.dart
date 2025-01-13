@@ -40,7 +40,7 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.arrow_back, color: Colors.black),
+                icon: Icon(Icons.arrow_back, color: Colors.white),
               ),
               centerTitle: true,
               title: Text(
@@ -48,14 +48,14 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
                 style: GoogleFonts.montserrat(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Colors.black,
+                  color: Colors.white,
                   letterSpacing: 2,
                 ),
               ),
               elevation: 0,
               shadowColor: Colors.grey.shade50,
-              backgroundColor: Colors.white,
-              surfaceTintColor: Colors.white,
+              backgroundColor: Color(0xFF5f3461),
+              surfaceTintColor: Color(0xFF5f3461),
             ),
             body: SingleChildScrollView(
               child: Padding(
@@ -280,7 +280,7 @@ class _ProductAddingScreenState extends State<ProductAddingScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                     child: SizedBox(
-                      height: 60,
+                      height: 55,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff5F3461),

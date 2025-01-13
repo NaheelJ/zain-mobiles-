@@ -49,7 +49,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.arrow_back),
+                icon: Icon(Icons.arrow_back, color: Colors.white),
               ),
               centerTitle: true,
               title: Text(
@@ -57,13 +57,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 style: GoogleFonts.montserrat(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Colors.black,
+                  color: Colors.white,
                   letterSpacing: 2,
                 ),
               ),
               actions: [
                 PopupMenuButton<String>(
                   surfaceTintColor: Colors.white,
+                  iconColor: Colors.white,
                   color: Colors.white,
                   itemBuilder: (BuildContext context) {
                     return [
@@ -96,8 +97,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 SizedBox(width: width * 0.01),
               ],
               shadowColor: Colors.grey.shade50,
-              backgroundColor: Colors.white,
-              surfaceTintColor: Colors.white,
+              backgroundColor: Color(0xFF5f3461),
+              surfaceTintColor: Color(0xFF5f3461),
             ),
             body: RefreshIndicator(
               displacement: 5,
@@ -203,7 +204,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                     child: SizedBox(
-                      height: 60,
+                      height: 55,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff5F3461),
@@ -378,9 +379,7 @@ Future<void> showDeleteConfirmationDialog({
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.black,
                         backgroundColor: Color(0xffF6FBFF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0), side: BorderSide(color: Colors.grey)),
                         padding: const EdgeInsets.symmetric(vertical: 14.0),
                       ),
                       child: const Text("Cancel"),
@@ -395,13 +394,17 @@ Future<void> showDeleteConfirmationDialog({
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.white,
-                        backgroundColor: Colors.redAccent.shade200,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
+                        backgroundColor: Color(0xffF6FBFF),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0), side: BorderSide(color: Colors.red)),
                         padding: const EdgeInsets.symmetric(vertical: 14.0),
                       ),
-                      child: const Text("Delete"),
+                      child: Text(
+                        "Delete",
+                        style: GoogleFonts.montserrat(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
                   ),
                 ],

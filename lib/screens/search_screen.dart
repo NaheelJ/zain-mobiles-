@@ -18,20 +18,20 @@ class SearchScreen extends StatelessWidget {
     provider.assignCategoryFoundProductList(listData: dataBase.listData);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
+        backgroundColor: Color(0xFF5f3461),
+        surfaceTintColor: Color(0xFF5f3461),
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back, color: Colors.black)),
+            icon: Icon(Icons.arrow_back, color: Colors.white)),
         centerTitle: true,
         title: Text(
           "Categories",
           style: GoogleFonts.montserrat(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: Colors.black,
+            color: Colors.white,
             letterSpacing: 1,
           ),
         ),

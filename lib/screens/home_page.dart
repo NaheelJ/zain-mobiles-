@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:zain_mobiles/screens/adding/adding_category.dart';
 import 'package:zain_mobiles/screens/products_listing_page.dart';
-import 'package:zain_mobiles/screens/search_screen.dart';
 import 'package:zain_mobiles/view_model/data_base_management.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,57 +35,6 @@ class _HomePageState extends State<HomePage> {
         : SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: height * 0.01),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-                  child: Container(
-                    height: height * 0.06,
-                    width: width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Color(0xffF6FBFF),
-                    ),
-                    child: Center(
-                      child: TextField(
-                        readOnly: true,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SearchScreen(),
-                            ),
-                          );
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'Search here..',
-                          hintStyle: GoogleFonts.montserrat(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xff5F3461),
-                            letterSpacing: 2,
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(color: Colors.transparent),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(color: Colors.transparent),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(color: Colors.transparent),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xffF6FBFF),
-                          prefixIcon: Icon(Icons.search, color: Color(0xff5F3461)),
-                          contentPadding: EdgeInsets.only(left: width * 0.09),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
                 SizedBox(height: height * 0.02),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

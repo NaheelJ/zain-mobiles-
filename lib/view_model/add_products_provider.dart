@@ -19,6 +19,7 @@ class AddProductsProvider extends ChangeNotifier {
 
   int selectedTypeIndex = 0;
   List<dynamic> selectedTypeList = [];
+  List<bool> isDropDownOpen = [];
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
   void assignSelectedTypeIndex(index) {
@@ -27,6 +28,12 @@ class AddProductsProvider extends ChangeNotifier {
 
   void setselectedTypeIndex(index) {
     selectedTypeIndex = index;
+    notifyListeners();
+  }
+
+  void setDropDownsheet(index) {
+    isDropDownOpen[index] = !isDropDownOpen[index];
+    print(isDropDownOpen);
     notifyListeners();
   }
 
@@ -117,10 +124,12 @@ class AddProductsProvider extends ChangeNotifier {
 
   void assignProductFoundProductList(currentproductList) {
     productFoundProducts = currentproductList;
+    isDropDownOpen = List<bool>.generate(productFoundProducts.length, (index) => false);
   }
 
   void setProductFoundProductList(currentproductList) {
     productFoundProducts = currentproductList;
+    isDropDownOpen = List<bool>.generate(productFoundProducts.length, (index) => false);
     notifyListeners();
   }
 

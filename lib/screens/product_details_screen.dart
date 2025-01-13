@@ -62,24 +62,36 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
               ),
               actions: [
-                IconButton(
-                  onPressed: () {
-                    showDeleteConfirmationDialog(
-                      context: context,
-                      deletingThing: "product",
-                      onDelete: () {
-                        dataBase.removeProduct(
-                          productName: widget.productName,
-                          categoryName: widget.categoryName,
-                        );
-                        Navigator.pop(context);
-                      },
-                    );
+                PopupMenuButton<String>(
+                  surfaceTintColor: Colors.white,
+                  color: Colors.white,
+                  itemBuilder: (BuildContext context) {
+                    return [
+                      PopupMenuItem(
+                        onTap: () {
+                          showDeleteConfirmationDialog(
+                            context: context,
+                            deletingThing: "product",
+                            onDelete: () {
+                              dataBase.removeProduct(
+                                productName: widget.productName,
+                                categoryName: widget.categoryName,
+                              );
+                              Navigator.pop(context);
+                            },
+                          );
+                        },
+                        child: Text(
+                          'Delete',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ];
                   },
-                  icon: Icon(
-                    Icons.delete_outline,
-                    color: Colors.black,
-                  ),
                 ),
                 SizedBox(width: width * 0.01),
               ],
@@ -309,6 +321,7 @@ Future<void> showDeleteConfirmationDialog({
     barrierDismissible: false,
     builder: (context) {
       return Dialog(
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
@@ -321,11 +334,11 @@ Future<void> showDeleteConfirmationDialog({
               Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.red.shade100,
+                  color: Colors.red.shade50,
                 ),
                 padding: const EdgeInsets.all(16.0),
                 child: Icon(
-                  Icons.error_outline,
+                  Icons.delete_outline,
                   color: Colors.red,
                   size: 48.0,
                 ),
@@ -364,7 +377,7 @@ Future<void> showDeleteConfirmationDialog({
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.black,
-                        backgroundColor: Colors.grey.shade300,
+                        backgroundColor: Color(0xffF6FBFF),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),

@@ -111,7 +111,6 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(bottom: height * 0.0),
                     decoration: BoxDecoration(
                       color: Color(0xFF5f3461),
                       borderRadius: BorderRadius.vertical(
@@ -121,7 +120,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: width * 0.04,
-                        vertical: height * 0.015,
+                        vertical: height * 0.02,
                       ),
                       child: Container(
                         height: height * 0.055,

@@ -378,7 +378,7 @@ Future<void> showDeleteConfirmationDialog({
                       },
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.black,
-                        backgroundColor: Color(0xffF6FBFF),
+                        backgroundColor: Colors.grey.shade100,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0), side: BorderSide(color: Colors.grey)),
                         padding: const EdgeInsets.symmetric(vertical: 14.0),
                       ),
@@ -393,8 +393,7 @@ Future<void> showDeleteConfirmationDialog({
                         Navigator.pop(context); // Close dialog
                       },
                       style: TextButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Color(0xffF6FBFF),
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0), side: BorderSide(color: Colors.red)),
                         padding: const EdgeInsets.symmetric(vertical: 14.0),
                       ),

@@ -39,41 +39,53 @@ class SearchScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Search here..',
-                  labelStyle: GoogleFonts.montserrat(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xff5F3461),
-                    letterSpacing: 2,
-                  ),
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Colors.transparent),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Colors.transparent),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(color: Colors.transparent),
-                  ),
-                  filled: true,
-                  fillColor: Color(0xffF6FBFF),
-                  prefixIcon: Icon(Icons.search, color: Color(0xff5F3461)),
-                  contentPadding: EdgeInsets.only(left: width * 0.09),
+            Container(
+              padding: EdgeInsets.only(bottom: height * 0.0),
+              decoration: BoxDecoration(
+                color: Color(0xFF5f3461),
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(15),
                 ),
-                onTapOutside: (event) {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                },
-                onChanged: (enteringKey) {
-                  provider.runFilterCategory(enteringKey: enteringKey, listData: dataBase.listData);
-                },
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.04, vertical: height * 0.02),
+                child: SizedBox(
+                  height: height * 0.055,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      labelText: 'Search here..',
+                      labelStyle: GoogleFonts.montserrat(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xff5F3461),
+                        letterSpacing: 2,
+                      ),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(color: Colors.transparent),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(color: Colors.transparent),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(color: Colors.transparent),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xffF6FBFF),
+                      prefixIcon: Icon(Icons.search, color: Color(0xff5F3461)),
+                      contentPadding: EdgeInsets.only(left: width * 0.09),
+                    ),
+                    onTapOutside: (event) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+                    },
+                    onChanged: (enteringKey) {
+                      provider.runFilterCategory(enteringKey: enteringKey, listData: dataBase.listData);
+                    },
+                  ),
+                ),
               ),
             ),
             SizedBox(height: height * 0.03),

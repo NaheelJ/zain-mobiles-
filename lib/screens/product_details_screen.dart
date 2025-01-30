@@ -43,6 +43,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Provider.of<DataBaseManagement>(context).isLoading
         ? LoadingScreen()
         : Scaffold(
+          extendBody: true,
             appBar: AppBar(
               elevation: 0,
               leading: IconButton(

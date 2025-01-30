@@ -42,6 +42,16 @@ class MyHomePage extends StatelessWidget {
                 // Text("Zain\nMobiles",style: GoogleFonts.headlandOne(fontSize: 14,color: Colors.white))
                 //   ],
                 // ),
+                Container(
+                  height: 20,
+                  width: 35,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.contain,
+                      image: AssetImage("assets/images/minilogo.png"),
+                    ),
+                  ),
+                ),
                 // SizedBox(width: width * 0.1),
                 Center(
                   child: Consumer<AddProductsProvider>(

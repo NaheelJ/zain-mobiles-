@@ -174,63 +174,52 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                   ),
                   SizedBox(height: height * 0.02),
                   Container(
+                    height: height * 0.055,
                     width: width,
-                    padding: EdgeInsets.only(left: width * 0.08),
-                    child: Consumer<AddProductsProvider>(builder: (context, person, child) {
-                      return SingleChildScrollView(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
+                    ),
+                    padding: EdgeInsets.only(left: width * 0.04, bottom: height * 0.015),
+                    child: Consumer<AddProductsProvider>(
+                      builder: (context, person, child) => ListView.builder(
+                        itemCount: widget.types!.length,
+                        shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: List.generate(
-                            widget.types!.length,
-                            (index) {
-                              return Padding(
-                                padding: EdgeInsets.only(right: widget.types!.length == 1 ? width * 0.0 : width * 0.2),
-                                child: InkWell(
-                                  onTap: () {
-                                    person.setselectedTypeIndex(index);
-                                    provider.setSelectedTypeList(
-                                      types: widget.types!,
-                                      listData: dataBase.listData,
-                                      categoryName: widget.categoryName!,
-                                    );
-                                    person.setProductFoundProductList(provider.selectedTypeList);
-                                  },
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        widget.types![index] as String,
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 14,
-                                          fontWeight: index == person.selectedTypeIndex ? FontWeight.w600 : FontWeight.w400,
-                                          color: index != person.selectedTypeIndex ? Colors.black : Colors.amber,
-                                          letterSpacing: 1,
-                                        ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Container(
-                                        height: 2,
-                                        width: width * 0.13,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                          color: index != person.selectedTypeIndex ? Colors.transparent : Colors.amber,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                        itemBuilder: (context, index) => Padding(
+                          padding: EdgeInsets.only(right: widget.types!.length == 1 ? width * 0.0 : width * 0.04),
+                          child: InkWell(
+                            onTap: () {
+                              person.setselectedTypeIndex(index);
+                              provider.setSelectedTypeList(
+                                types: widget.types!,
+                                listData: dataBase.listData,
+                                categoryName: widget.categoryName!,
                               );
+                              person.setProductFoundProductList(provider.selectedTypeList);
                             },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: height * 0.006),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                  color: index != person.selectedTypeIndex ? Colors.grey.shade300 : Colors.amber,
+                                ),
+                              ),
+                              child: Text(
+                                widget.types![index] as String,
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 14,
+                                  fontWeight: index == person.selectedTypeIndex ? FontWeight.w600 : FontWeight.w400,
+                                  color: index != person.selectedTypeIndex ? Colors.grey.shade700 : Colors.amber,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      );
-                    }),
+                      ),
+                    ),
                   ),
-                  SizedBox(height: height * 0.003),
-                  Divider(color: Colors.grey.shade300),
-                  SizedBox(height: height * 0.025),
                   Consumer<AddProductsProvider>(
                     builder: (context, person, child) {
                       return person.selectedTypeList.isNotEmpty
@@ -241,14 +230,15 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                               strokeWidth: 3,
                               triggerMode: RefreshIndicatorTriggerMode.onEdge,
                               onRefresh: _handleRefresh,
-                              child: SizedBox(
+                              child: Container(
                                 width: width,
                                 height: height * 0.76,
+                                color: Colors.grey.shade50,
                                 child: ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: person.productFoundProducts.length,
                                   physics: AlwaysScrollableScrollPhysics(),
-                                  padding: EdgeInsets.only(left: width * 0.04, right: width * 0.04, bottom: height * 0.06),
+                                  padding: EdgeInsets.only(left: width * 0.04, right: width * 0.04, bottom: height * 0.1, top: 15),
                                   itemBuilder: (context, index) {
                                     return Padding(
                                       padding: EdgeInsets.only(bottom: height * 0.015),
@@ -275,14 +265,14 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                                 borderRadius: BorderRadius.circular(15),
                                                 boxShadow: [
                                                   BoxShadow(
-                                                    blurRadius: 0.3,
-                                                    color: Colors.grey.shade100,
-                                                    offset: const Offset(2, -3),
+                                                    blurRadius: 2,
+                                                    color: Colors.grey.shade300,
+                                                    offset: const Offset(1, -2),
                                                   ),
                                                   BoxShadow(
-                                                    blurRadius: 0.3,
-                                                    color: Colors.grey.shade100,
-                                                    offset: const Offset(-3, 2),
+                                                    blurRadius: 2,
+                                                    color: Colors.grey.shade300,
+                                                    offset: const Offset(-2, 1),
                                                   ),
                                                 ],
                                               ),
@@ -354,6 +344,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                                 child: ListView.builder(
                                                   itemCount: person.productFoundProducts[index]['suitableFor'].length,
                                                   shrinkWrap: true,
+                                                  physics: NeverScrollableScrollPhysics(),
                                                   padding: EdgeInsets.all(0),
                                                   itemBuilder: (context, minIndex) => Column(
                                                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -362,6 +353,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                                         height: height * 0.06,
                                                         width: width,
                                                         decoration: BoxDecoration(
+                                                          color: Colors.white,
                                                           border: Border(
                                                             bottom: BorderSide(color: minIndex == person.productFoundProducts[index]['suitableFor'].length - 1 ? Colors.white : Colors.grey.shade300),
                                                           ),
@@ -394,7 +386,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                           : SizedBox();
                     },
                   ),
-                  SizedBox(height: height * 0.04),
+                  SizedBox(height: height * 0.1),
                 ],
               ),
             ),

@@ -149,6 +149,7 @@ class AddProductsProvider extends ChangeNotifier {
     }
 
     productFoundProducts = result;
+    isDropDownOpen = List<bool>.generate(productFoundProducts.length, (index) => false);
     notifyListeners();
   }
 }

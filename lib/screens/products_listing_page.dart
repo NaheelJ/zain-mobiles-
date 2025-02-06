@@ -330,7 +330,7 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                               child: Container(
                                                 width: width,
                                                 margin: EdgeInsets.only(bottom: height * 0.015),
-                                                padding: EdgeInsets.symmetric(vertical: height * 0.004),
+                                                padding: EdgeInsets.symmetric(vertical: height * 0.005),
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.vertical(
                                                     bottom: Radius.circular(10),
@@ -346,32 +346,34 @@ class _ProductsListingScreenState extends State<ProductsListingScreen> {
                                                   shrinkWrap: true,
                                                   physics: NeverScrollableScrollPhysics(),
                                                   padding: EdgeInsets.all(0),
-                                                  itemBuilder: (context, minIndex) => Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                        height: height * 0.06,
-                                                        width: width,
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          border: Border(
-                                                            bottom: BorderSide(color: minIndex == person.productFoundProducts[index]['suitableFor'].length - 1 ? Colors.white : Colors.grey.shade300),
+                                                  itemBuilder: (context, minIndex) {
+                                                    return Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      children: [
+                                                        Container(
+                                                          height: height * 0.06,
+                                                          width: width,
+                                                          decoration: BoxDecoration(
+                                                            color: Colors.white,
+                                                            border: Border(
+                                                              bottom: BorderSide(color: minIndex == person.productFoundProducts[index]['suitableFor'].length - 1 ? Colors.white : Colors.grey.shade300),
+                                                            ),
                                                           ),
-                                                        ),
-                                                        child: Center(
-                                                          child: Text(
-                                                            person.productFoundProducts[index]['suitableFor'][minIndex],
-                                                            style: GoogleFonts.montserrat(
-                                                              fontSize: 14,
-                                                              fontWeight: FontWeight.w400,
-                                                              color: Colors.black,
-                                                              letterSpacing: 1.5,
+                                                          child: Center(
+                                                            child: Text(
+                                                              person.productFoundProducts[index]['suitableFor'][minIndex],
+                                                              style: GoogleFonts.montserrat(
+                                                                fontSize: 14,
+                                                                fontWeight: FontWeight.w400,
+                                                                color: Colors.black,
+                                                                letterSpacing: 1.5,
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                      ],
+                                                    );
+                                                  },
                                                 ),
                                               ),
                                             ),

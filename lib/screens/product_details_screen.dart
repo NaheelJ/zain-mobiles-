@@ -43,9 +43,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Provider.of<DataBaseManagement>(context).isLoading
         ? LoadingScreen()
         : Scaffold(
-          extendBody: true,
+            extendBody: true,
             appBar: AppBar(
+              toolbarHeight: height * 0.1,
               elevation: 0,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))),
               leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -101,97 +103,99 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               backgroundColor: Color(0xFF5f3461),
               surfaceTintColor: Color(0xFF5f3461),
             ),
-            body: RefreshIndicator(
-              displacement: 5,
-              backgroundColor: Colors.white,
-              color: Color(0xFF5f3461),
-              strokeWidth: 3,
-              triggerMode: RefreshIndicatorTriggerMode.anywhere,
-              onRefresh: _handleRefresh,
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.04),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: height * 0.03),
-                      Container(
-                        width: width,
-                        padding: EdgeInsets.symmetric(vertical: height * 0.03, horizontal: width * 0.04),
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 252, 229, 255),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: Color(0xFF5f3461),
+            body: Padding(
+              padding: EdgeInsets.only(bottom: height * 0.1),
+              child: RefreshIndicator(
+                displacement: 5,
+                backgroundColor: Colors.white,
+                color: Color(0xFF5f3461),
+                strokeWidth: 3,
+                triggerMode: RefreshIndicatorTriggerMode.anywhere,
+                onRefresh: _handleRefresh,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.04),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: height * 0.03),
+                        Container(
+                          width: width,
+                          padding: EdgeInsets.symmetric(vertical: height * 0.03, horizontal: width * 0.04),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 252, 229, 255),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Color(0xFF5f3461),
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Suitable Models',
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                  letterSpacing: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Suitable Models',
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    letterSpacing: 2,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(height: height * 0.01),
-                            Divider(color: Colors.white),
-                            SizedBox(height: height * 0.005),
-                            Consumer<AddProductsProvider>(
-                              builder: (context, person, child) {
-                                return ListView.builder(
-                                  itemCount: person.suitableProducts.length,
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: width * 0.01, vertical: height * 0.015),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(color: Color(0xFF5f3461)),
-                                              borderRadius: BorderRadius.circular(8),
+                              SizedBox(height: height * 0.01),
+                              Divider(color: Colors.white),
+                              SizedBox(height: height * 0.005),
+                              Consumer<AddProductsProvider>(
+                                builder: (context, person, child) {
+                                  return ListView.builder(
+                                    itemCount: person.suitableProducts.length,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: width * 0.01, vertical: height * 0.015),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(color: Color(0xFF5f3461)),
+                                                borderRadius: BorderRadius.circular(8),
+                                              ),
+                                              child: Text(
+                                                "${index + 1}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: GoogleFonts.montserrat(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
                                             ),
-                                            child: Text(
-                                              "${index + 1}",
-                                              overflow: TextOverflow.ellipsis,
+                                            SizedBox(width: width * 0.04),
+                                            Text(
+                                              '${person.suitableProducts[index]}',
                                               style: GoogleFonts.montserrat(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.black,
                                               ),
                                             ),
-                                          ),
-                                          SizedBox(width: width * 0.04),
-                                          Text(
-                                            '${person.suitableProducts[index]}',
-                                            style: GoogleFonts.montserrat(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w500,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ],
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(height: height * 0.06),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
